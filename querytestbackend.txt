@@ -1,0 +1,30 @@
+CREATE TABLE users
+( users_id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(30) NOT NULL,
+  gender VARCHAR(10),
+  status VARCHAR(10),
+  CONSTRAINT users_pk PRIMARY KEY (users_id),
+  INDEX users_idx (users_id)
+ );
+
+ CREATE TABLE hobbies
+( hobby_id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(30) NOT NULL,
+  level VARCHAR(10),
+  CONSTRAINT hobby_pk PRIMARY KEY (hobby_id),
+  INDEX hobby_idx (hobby_id)
+ );
+
+ CREATE TABLE map_user_hobbies
+( map_id INT(11) NOT NULL AUTO_INCREMENT,
+  id_users INT(11),
+  id_hobby INT(11),
+  status  VARCHAR(10),
+  PRIMARY KEY (map_id),
+  FOREIGN KEY(id_users) REFERENCES users(users_id),
+  FOREIGN KEY(id_hobby) REFERENCES hobbies(hobby_id)
+ );
+
+
+ SELECT gender , COUNT(*) FROM users WHERE users_id IN ( SELECT id_users FROM map_user_hobbies WHERE id_hobby = 2 AND status = 'active') GROUP BY gender;
+ 
